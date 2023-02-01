@@ -1,59 +1,108 @@
-# T14L-G1
-# Part 1
+# T14L G1
+# Alien vs. Zombie
 
-## Video Demo
+Please introduce the game here.
 
-Please provide the YouTube link to your [Video Demo](https://youtube.com).
+You may add one signature screenshot of your program here or above the title. Check out [this tutorial](https://www.digitalocean.com/community/tutorials/markdown-markdown-images) to learn how to do it.
 
-## Minimum Requirements
+Please provide the YouTube link to your [Video Demo](https://www.youtube.com/watch?v=2GPoesbnCJE).
 
-### Completed
+## Compilation Instructions
 
-List all the features completed.
+Provide instructions on how to compile your program, especially when it is non-trivial.
 
-1. Gameboard class was created.
-2. Character classes were created.
-3. Testing of the above classes was completed.
+1. g++ main.cpp
+2. .\a
 
-### To Do
+## User Manual
 
-List all the features not yet done. Remove this section if there is no incomplete requirements.
+--HOW TO USE--
 
-1. Create functions to generate game objects as per user demand.
-2. Create functions to controle game objects as per user demand.
-3. Handle user inputs including unexpected inputs.
-4. Handle saving and loading function for the game.
-5. Finally test the complete product before submitting.
+Default setting:
+There will be a default setting provided if user does not wish to make any changes. User will be asked if they would like to make changes. User will only be allowed to enter "y" or "n". If user enters different characters or numbers, users will be asked to re-enter the input. 
 
-## Additional Features
+Board setting:
+When user wants to update or customise its board setting, it will lead them into the board setting. User will be asked to enter the number of rows, number of columns and number of zombies. If user accidentally enters other than integer number, they will be asked to re-enter again. Besides, if user enters even number, they will be asked to enter again. After that, the gameboard will be created according to user's input. The alien will also be shown at the center of the board automatically.
 
-No additional feature has been implemented.
+Gameboard:
+The gameboard class would create an empty gameboard with the provided dimantions to the class constructor.
+Create a gameboard: Gameboard board_name = Gameboard(int number_of_rows, int number_of_cols);
+The gameboard has 5 different properties respectively columns, rows, total_cols, total_rows and the pointer to the 2D array of the actual gameboard namely "board".
+The board will have 2*provided_rows + 1 rows and 2*provided_cols + 1 columns in total.
+Within these rows and columns only the odd places would be empty for game characters.
 
-## Contributions
+Example: Let's say you want to put a zombie in the first top right corner of the board, you can access the top right corner with board[1][1] selector and you can set it to whatever you want.
 
-List down the contribution of each group members.
+Showing the gameboard: The Gameboard object will have a default showGameboard() methood that will allow you to show the gameboard as it is.
+Example: board_name.showGameboard();
 
-### Kawsar
+Characters:
+All the characters will have some common characteristics as below:
+char name: name of the character
+int life: total life of the character
+int impact: hit impact of the character
+int x_pos: character position on the x dimension
+int y_pos: character position on the y dimension
+bool alive: if the character is alive after getting hit
 
-1. Create a random number generator function to make it easy along the way to generate random numbers.
-2. Define class to generate the gameboard upon given dimensions.
-3. Define super class with the common characteristics.
-4. Characters have been facilitated with movement ability through the superclass(Character) methods.
-5. Characters are given the got hit behaviour via super class method.
-6. Alien, Zombie, Rock and Pod classes were created by inheriting the Character super class with inclusion of some crucial extra characteristics.
+Also they will have the common movement method.
+Movement methods:
+move_up();
+move_down();
+move_right();
+move_left();
+Note: Every time you move the character, it will move by 2 rows or columns as the board itself has it's own elements occopying certain places on the board.
 
-### Steve Rogers
+Beside movements they will have a gotHit methood calling which would change the life of the character according to the hit impact and set the "alive" property as "false" if the life becomes < 0.
 
-1. Zombie movement and attack behaviour.
-2. *add more*
+Alien:
+Beside the common characteristics, alien would have its "int max_life" and "int attacs".
+The name is set to 'A' as default.
+Methoods:
+Beside the common methoods described earlier it would have the below methoods:
+addLife(): This methood will increase the life of the alien till max_life with the provided increment.
+attacked(): This will increase the "attacks" number by one.
 
-### Dr. Strange
+Example:
+Create the alien object:- Alien alien_name = Alien(int set_maxLife, int set_impact, int set_x, int set_y);
+Get name:- alien_name.name;
+Get x position:- alien_name.x_pos;
+Add life:- alien_name.addLife();
+Increase attakcs number:- alien_name.attacked();
+Got hit:- alien_name.gotHit();
+Move:- alien_name.move_up();
 
-1. Implement all game objects.
-2. *add more*
+Zombie:
+It would have all the common characteristics and methoods described in the Characters section.
+Example:
+Create a zombie object:- Zombie zombie_name = Zombie(char set_name, int alienLife, int set_x, int set_y);
+Get x position:- zombie_name.x_pos;
+Get name:- zombie_name.name;
+Got hit:- zombie_name.gotHit();
 
-## Problems Encountered & Solutions
+Rock:
+It will have all the common characteristics.
+Beside common methoods it will have reveal() methood to reveal its hidden item. The hidden item would be picked up randomly and returned as a char value. You will have to create a new game object based on the returned char value and put it back to the gaemboard on the same place as the rock holds.
+Example:
+You cna create and access the properties of the object following previous examples.
 
-Problem: Returning a 2D array from a function.
-Solution: Whenever an array is created in c++, a dedicated memory location according to the array size gets allocated for the array. And as we keep assigning the values to the array, it stores the values to the previously allocated memory location in a row wise manner. To get an array back from a function in c++ we need to get the pointer to the first object location in the memory. Once we have the first object location pointer we can just keep addin 1 to the pointer to get the next object pointer. And once we have the pointer we can jsut dereferance the pointer to access the actual value that is stored in the memory location. 
-Now for a 2D array, we will have an array of arrays. So, we will have an array as the first element of the first array. To access all the elements of the 2D array at first we need to have the pointer to the first element of the container array which is an array itself. So to access the first element of the 2D array we need to access the first array pointer and then the pointer to the first elemt of the first array inside the container array. After we have the pointer to the first element of the first array in the container we can just keep adding 1 to access the next element and to change the row we can just add 1 to the first array pointer.
+Pod:
+Beside common characteristics it would have an attack_radius, you will have to set the radious as you create the object.
+The name is set to 'P' as default.
+The impact is set to 10 as default.
+Example:
+You cna create and access the properties of the object following previous examples.
+
+## Progress Log
+
+- [Part 1](PART1.md)
+- [Part 2](PART2.md)
+
+## Contributors
+
+Please replace the following with your group members' names. 
+
+- Kawsar
+- Cheng Fu Lin
+- Lau Jun Xing
+
